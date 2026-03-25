@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Business Agent</title>
+</head>
+<body>
+
+<h2>AI Business Automation Agent</h2>
+
+<textarea id="task" rows="5" cols="50" placeholder="Enter your task..."></textarea>
+<br><br>
+
+<select id="type">
+    <option value="general">General</option>
+    <option value="email">Email</option>
+    <option value="instagram">Instagram</option>
+    <option value="support">Support</option>
+</select>
+
+<br><br>
+
+<button onclick="sendTask()">Run</button>
+
+<h3>Result:</h3>
+<p id="result"></p>
+
+<script>
+async function sendTask() {
+    const task = document.getElementById("task").value;
+    const type = document.getElementById("type").value;
+
+    const response = await fetch("http://127.0.0.1:8000/run", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            task: task,
+            task_type: type
+        })
+    });
+
+    const data = await response.json();
+    document.getElementById("result").innerText = data.result;
+}
+</script>
+
+</body>
+</html>
